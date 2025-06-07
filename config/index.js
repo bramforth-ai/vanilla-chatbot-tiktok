@@ -69,6 +69,7 @@ const config = {
   summary: {
     minMessageCount: parseInt(process.env.SUMMARY_MIN_MESSAGE_COUNT || '5', 10),
     maxLength: parseInt(process.env.SUMMARY_MAX_LENGTH || '500', 10),
+    recentMessageCount: parseInt(process.env.SUMMARY_RECENT_MESSAGE_COUNT || '20', 10), // NEW
     enabled: process.env.ENABLE_SUMMARIES !== 'false' // Enable by default unless explicitly disabled
   },
 

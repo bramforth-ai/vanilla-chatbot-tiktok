@@ -70,9 +70,9 @@ const summaryService = {
         return null;
       }
 
-      const response = await openai.responses.create({
+      const response = await openai.chat.completions.create({
         model: model,
-        input: input,
+        messages: input,
         temperature: 0.3
       });
 
@@ -119,7 +119,7 @@ const summaryService = {
       return null;
     }
   },
-  
+
   /**
    * Create a system prompt for the summarization
    * @param {mongoose.Document} conversation - Conversation document
@@ -129,14 +129,14 @@ const summaryService = {
     // Get user info for context
     const userInfo = conversation.userInfo;
     let userContext = '';
-    
+
     if (userInfo) {
       userContext = `This conversation is with a user named ${userInfo.firstName || ''} ${userInfo.lastName || ''}.`;
       if (userInfo.userId) {
         userContext += ` Their User ID is ${userInfo.userId}.`;
       }
     }
-    
+
     // Create the summarization prompt
     return `
     Create a concise summary of this conversation between an AI assistant and a user. ${userContext}
@@ -158,7 +158,7 @@ const summaryService = {
     Keep under 500 words but prioritize actionable details over generic statements.
     `;
   },
-  
+
   /**
    * Extract the summary text from an OpenAI response
    * @param {Object} response - OpenAI API response
@@ -166,23 +166,10 @@ const summaryService = {
    */
   extractSummaryText(response) {
     try {
-      if (!response.output || !response.output.length) {
-        return null;
+      if (response.choices && response.choices.length > 0 && response.choices[0].message) {
+        return response.choices[0].message.content;
       }
-      
-      let summaryText = '';
-      
-      for (const outputItem of response.output) {
-        if (outputItem.type === 'message' && outputItem.content && outputItem.content.length > 0) {
-          for (const contentItem of outputItem.content) {
-            if (contentItem.type === 'output_text') {
-              summaryText += contentItem.text;
-            }
-          }
-        }
-      }
-      
-      return summaryText || null;
+      return null;
     } catch (error) {
       logger.error('Error extracting summary text:', error);
       return null;

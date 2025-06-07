@@ -571,6 +571,15 @@ const openaiService = {
     context.push('DO NOT ask for information you already have.');
 
     return context.join(' ');
+  },
+
+  // ADD THIS MISSING METHOD:
+  /**
+   * Get the OpenAI client instance
+   * @returns {Object} OpenAI client instance
+   */
+  getOpenAIClient() {
+    return openai;
   }
 };
 
