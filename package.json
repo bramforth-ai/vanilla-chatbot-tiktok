@@ -24,7 +24,7 @@
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.1.0",
     "mongoose": "^8.2.1",
-    "multer": "^2.0.0",
+    "multer": "^2.4.0",
     "openai": "^4.28.0",
     "twilio": "^4.22.0",
     "uuid": "^9.0.1",
