@@ -56,7 +56,7 @@ const config = {
   openai: {
     apiKey: process.env.OPENAI_API_KEY,
     // Ensure we're using a vision-capable model
-    model: process.env.OPENAI_MODEL || 'gpt-4.1-nano-2025-04-14', // Vision-capable model 
+    model: process.env.OPENAI_MODEL || 'gpt-5.6-luna', // Vision-capable model 
     summaryModel: process.env.OPENAI_SUMMARY_MODEL || 'gpt-4o-mini-2024-07-18'
   },
 
